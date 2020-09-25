@@ -84,7 +84,13 @@ changeKeylayout() {
           changed=true
         fi
     fi
-
+    
+    if getprop ro.vendor.product.device |grep -iq -e RMX2001;then
+          setprop persist.sys.phh.fingerprint.nocleanup true
+          setprop persist.sys.qcom-brightness "$(cat /sys/class/leds/lcd-backlight/max_brightness)"
+	  setprop persist.sys.overlay.devinputjack true
+    fi
+    
     if getprop ro.vendor.build.fingerprint | grep -qi oneplus/oneplus6/oneplus6; then
         cp /system/phh/oneplus6-synaptics_s3320.kl /mnt/phh/keylayout/synaptics_s3320.kl
         chmod 0644 /mnt/phh/keylayout/synaptics_s3320.kl
